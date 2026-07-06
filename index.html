@@ -378,14 +378,37 @@ nav.nav-links a:hover::after{width:100%;}
 
 /* ===== AI COMPANION ===== */
 .ai-section{background:linear-gradient(180deg, var(--ink) 0%, #191430 100%); position:relative; overflow:hidden;}
-.ai-wrap{display:grid; grid-template-columns:.9fr 1.1fr; gap:60px; align-items:center;}
+.ai-wrap{
+    display:grid;
+    grid-template-columns:1.15fr .85fr;
+    gap:80px;
+    align-items:center;
+}
 @media (max-width:980px){.ai-wrap{grid-template-columns:1fr;}}
-.neural{position:relative; aspect-ratio:1/1; max-width:460px;}
-.neural svg{width:100%; height:100%;}
-.neural .n-line{stroke:url(#neuralGrad); stroke-width:1.2; opacity:.5; animation:dash 6s linear infinite;}
-@keyframes dash{to{stroke-dashoffset:-200;}}
-.neural .n-node{fill:var(--purple); animation:nodepulse 2.6s ease-in-out infinite;}
-@keyframes nodepulse{0%,100%{r:4;} 50%{r:6;}}
+/* ===== AI Companion Image ===== */
+
+.neural{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    max-width:620px;
+    margin:auto;
+}
+
+.ai-companion-image{
+    width:100%;
+    max-width:620px;
+    height:auto;
+    display:block;
+    border-radius:24px;
+    box-shadow:0 30px 80px rgba(0,0,0,.45);
+    transition:all .35s ease;
+}
+
+.ai-companion-image:hover{
+    transform:translateY(-6px) scale(1.02);
+}
 .ai-list{display:grid; gap:14px;}
 .ai-item{display:flex; gap:16px; padding:18px; border-radius:16px; background:var(--glass); border:1px solid var(--glass-border); transition:.35s var(--ease);}
 .ai-item:hover{background:rgba(255,255,255,.1); transform:translateX(6px);}
@@ -786,15 +809,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
   <div class="container">
     <div class="ai-wrap">
       <div class="neural reveal">
-        <svg viewBox="0 0 400 400">
-          <defs>
-            <linearGradient id="neuralGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0%" stop-color="#B27CB2"/><stop offset="100%" stop-color="#2E3192"/>
-            </linearGradient>
-          </defs>
-          <g id="neuralLines" stroke-dasharray="6 6"></g>
-          <g id="neuralNodes"></g>
-        </svg>
+        <div class="neural reveal">
+    <img src="images/ai-companion.png"
+         alt="AI Companion"
+         class="ai-companion-image">
+</div>
       </div>
       <div>
         <span class="eyebrow">AI Companion</span>
