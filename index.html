@@ -168,16 +168,79 @@ nav.nav-links a:hover::after{width:100%;}
 
 /* ===== HERO ===== */
 .hero{
-  position:relative; min-height:100vh; display:flex; align-items:center;
-  padding:150px 4vw 80px; overflow:hidden;
-  background:
-    radial-gradient(1200px 600px at 15% 10%, rgba(108,59,255,.35), transparent 60%),
-    radial-gradient(900px 500px at 90% 30%, rgba(46,49,146,.4), transparent 60%),
-    var(--ink);
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding:150px 4vw 80px;
+    overflow:hidden;
+}
+  .hero::before{
+    content:"";
+    position:absolute;
+    inset:0;
+
+    background:
+        linear-gradient(
+            rgba(10,10,20,.65),
+            rgba(10,10,20,.65)
+        ),
+        url("images/hero-background.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    filter:blur(6px);
+
+    transform:scale(1.08);
+
+    z-index:0;
 }
 #hero-canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.55; pointer-events:none;}
 .hero-grid{
   position:relative; z-index:2; display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:start; width:100%; max-width:1320px; margin:0 auto;
+}
+  .hero-grid{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:56px;
+    align-items:start;
+    width:100%;
+    max-width:1320px;
+    margin:0 auto;
+}
+
+/* Paste here */
+
+.hero::after{
+    content:"";
+    position:absolute;
+
+    width:700px;
+    height:700px;
+
+    background:radial-gradient(
+        circle,
+        rgba(108,59,255,.30) 0%,
+        rgba(108,59,255,.12) 45%,
+        transparent 75%
+    );
+
+    top:-180px;
+    left:-150px;
+
+    pointer-events:none;
+
+    z-index:1;
+}
+
+@media (max-width:1080px){
+    .hero-grid{
+        grid-template-columns:1fr;
+    }
 }
 @media (max-width:1080px){ .hero-grid{grid-template-columns:1fr;} }
 .hero-copy{position:relative;}
@@ -262,10 +325,20 @@ nav.nav-links a:hover::after{width:100%;}
 
 /* ===== LEAD FORM ===== */
 .lead-card{
-  background:rgba(255,255,255,.06); border:1px solid var(--glass-border); border-radius:var(--radius-lg);
-  padding:34px; backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
-  box-shadow:0 30px 80px -30px rgba(0,0,0,.6);
-  position:sticky; top:110px;
+    background:rgba(25,25,35,.45);
+    border:1px solid rgba(255,255,255,.12);
+
+    backdrop-filter:blur(24px);
+    -webkit-backdrop-filter:blur(24px);
+
+    border-radius:28px;
+
+    padding:34px;
+
+    box-shadow:0 25px 60px rgba(0,0,0,.45);
+
+    position:sticky;
+    top:110px;
 }
 .lead-card h3{font-size:22px; margin-bottom:8px;}
 .lead-card > p{color:var(--text-dim); font-size:14px; margin-bottom:22px;}
