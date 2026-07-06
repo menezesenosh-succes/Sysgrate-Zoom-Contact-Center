@@ -168,79 +168,16 @@ nav.nav-links a:hover::after{width:100%;}
 
 /* ===== HERO ===== */
 .hero{
-    position:relative;
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    padding:150px 4vw 80px;
-    overflow:hidden;
-}
-  .hero::before{
-    content:"";
-    position:absolute;
-    inset:0;
-
-    background:
-        linear-gradient(
-            rgba(10,10,20,.65),
-            rgba(10,10,20,.65)
-        ),
-        url("hero-bg.png");
-
-    background-size:cover;
-    background-position:center;
-    background-repeat:no-repeat;
-
-    filter:blur(6px);
-
-    transform:scale(1.08);
-
-    z-index:0;
+  position:relative; min-height:100vh; display:flex; align-items:center;
+  padding:150px 4vw 80px; overflow:hidden;
+  background:
+    radial-gradient(1200px 600px at 15% 10%, rgba(108,59,255,.35), transparent 60%),
+    radial-gradient(900px 500px at 90% 30%, rgba(46,49,146,.4), transparent 60%),
+    var(--ink);
 }
 #hero-canvas{position:absolute; inset:0; width:100%; height:100%; opacity:.55; pointer-events:none;}
 .hero-grid{
   position:relative; z-index:2; display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:start; width:100%; max-width:1320px; margin:0 auto;
-}
-  .hero-grid{
-    position:relative;
-    z-index:2;
-    display:grid;
-    grid-template-columns:1.05fr .95fr;
-    gap:56px;
-    align-items:start;
-    width:100%;
-    max-width:1320px;
-    margin:0 auto;
-}
-
-/* Paste here */
-
-.hero::after{
-    content:"";
-    position:absolute;
-
-    width:700px;
-    height:700px;
-
-    background:radial-gradient(
-        circle,
-        rgba(108,59,255,.30) 0%,
-        rgba(108,59,255,.12) 45%,
-        transparent 75%
-    );
-
-    top:-180px;
-    left:-150px;
-
-    pointer-events:none;
-
-    z-index:1;
-}
-
-@media (max-width:1080px){
-    .hero-grid{
-        grid-template-columns:1fr;
-    }
 }
 @media (max-width:1080px){ .hero-grid{grid-template-columns:1fr;} }
 .hero-copy{position:relative;}
@@ -325,20 +262,10 @@ nav.nav-links a:hover::after{width:100%;}
 
 /* ===== LEAD FORM ===== */
 .lead-card{
-    background:rgba(25,25,35,.45);
-    border:1px solid rgba(255,255,255,.12);
-
-    backdrop-filter:blur(24px);
-    -webkit-backdrop-filter:blur(24px);
-
-    border-radius:28px;
-
-    padding:34px;
-
-    box-shadow:0 25px 60px rgba(0,0,0,.45);
-
-    position:sticky;
-    top:110px;
+  background:rgba(255,255,255,.06); border:1px solid var(--glass-border); border-radius:var(--radius-lg);
+  padding:34px; backdrop-filter:blur(22px); -webkit-backdrop-filter:blur(22px);
+  box-shadow:0 30px 80px -30px rgba(0,0,0,.6);
+  position:sticky; top:110px;
 }
 .lead-card h3{font-size:22px; margin-bottom:8px;}
 .lead-card > p{color:var(--text-dim); font-size:14px; margin-bottom:22px;}
@@ -655,7 +582,12 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <input id="company" name="company" type="text" placeholder="Acme Corp" required>
             <div class="err">Required field.</div>
           </div>
-            <div class="field">
+          <div class="field">
+            <label for="title">Job Title *</label>
+            <input id="title" name="title" type="text" placeholder="Head of CX" required>
+            <div class="err">Required field.</div>
+          </div>
+          <div class="field">
             <label for="phone">Phone Number *</label>
             <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" required>
             <div class="err">Please enter a valid phone number.</div>
@@ -665,7 +597,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <input id="country" name="country" type="text" placeholder="India" required>
             <div class="err">Required field.</div>
           </div>
-            <div class="field">
+          <div class="field">
+            <label for="industry">Industry</label>
+            <input id="industry" name="industry" type="text" placeholder="BFSI, SaaS, Retail...">
+          </div>
+          <div class="field">
             <label for="agents">Number of Agents</label>
             <select id="agents" name="agents">
               <option value="">Select</option>
@@ -676,7 +612,18 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
             <label for="platform">Current Platform</label>
             <input id="platform" name="platform" type="text" placeholder="e.g. Avaya, Genesys">
           </div>
-            <div class="field">
+          <div class="field">
+            <label for="solution">Interested Solution</label>
+            <select id="solution" name="solution">
+              <option>Zoom Contact Center</option>
+              <option>Zoom Phone</option>
+              <option>Zoom Workplace</option>
+              <option>Zoom Virtual Agent</option>
+              <option>AI Companion</option>
+              <option>Custom Integration</option>
+            </select>
+          </div>
+          <div class="field">
             <label for="timeline">Expected Timeline</label>
             <select id="timeline" name="timeline">
               <option>Immediately</option>
@@ -685,7 +632,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
               <option>Exploring</option>
             </select>
           </div>
-         </div>
+          <div class="field full">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="2" placeholder="Tell us about your CX goals..."></textarea>
+          </div>
+        </div>
         <label class="checkline"><input type="checkbox" id="consent" required> I agree to receive communication from Sysgrate regarding this inquiry.</label>
         <button type="submit" class="btn btn-primary form-submit">Book My Free Demo</button>
       </form>
@@ -942,7 +893,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
     </div>
     <div class="banner-stats">
       <div class="b-stat"><div class="n">24×7</div><div class="l">SUPPORT</div></div>
-      <div class="b-stat"><div class="n">4</div><div class="l">REGIONS</div></div>
+      <div class="b-stat"><div class="n">3</div><div class="l">REGIONS</div></div>
     </div>
   </div>
 </section>
