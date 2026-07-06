@@ -329,8 +329,24 @@ nav.nav-links a:hover::after{width:100%;}
 .benefit-row h4{font-size:16.5px; margin-bottom:5px;}
 .benefit-row p{font-size:14px; color:#5C566E;}
 .dashboard-mock{
-  background:var(--ink); border-radius:var(--radius-lg); padding:22px; border:1px solid rgba(255,255,255,.1);
-  box-shadow:0 40px 90px -30px rgba(46,49,146,.5);
+    background: transparent;
+    border: none;
+    padding: 0;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+}
+
+.dashboard-image{
+    width:100%;
+    height:auto;
+    display:block;
+    border-radius:24px;
+    transition:transform .35s ease;
+}
+
+.dashboard-image:hover{
+    transform:scale(1.02);
 }
 .dm-top{display:flex; justify-content:space-between; align-items:center; margin-bottom:18px;}
 .dm-top .dots{display:flex; gap:6px;}
@@ -683,11 +699,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
         <a href="#lead-form" class="btn btn-dark" style="margin-top:30px;">See It On Your Data ▸</a>
       </div>
 
-      <div class="dashboard-mock reveal reveal-delay-2">
-        <div class="dm-top">
-          <div class="dots"><span></span><span></span><span></span></div>
-          <div class="live"><span class="dot"></span>LIVE QUEUE</div>
-        </div>
+    <div class="dashboard-mock reveal">
+    <img src="imagesdashboard.png"
+         alt="Zoom Contact Center Dashboard"
+         class="dashboard-image">
+</div>
         <div class="dm-grid">
           <div class="dm-card"><div class="lbl">LIVE CALLS</div><div class="val" data-count="47">0</div></div>
           <div class="dm-card"><div class="lbl">CSAT</div><div class="val" data-count="96" data-suffix="%">0</div></div>
