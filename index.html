@@ -418,12 +418,29 @@ nav.nav-links a:hover::after{width:100%;}
 .ai-item p{font-size:13.5px; color:var(--text-dim);}
 
 /* ===== INTEGRATIONS ===== */
-.integ-wrap{position:relative; display:flex; align-items:center; justify-content:center; min-height:420px;}
-.integ-hub{width:120px; height:120px; border-radius:28px; background:var(--grad-brand); display:flex; align-items:center; justify-content:center; z-index:3; box-shadow:0 20px 60px -15px rgba(108,59,255,.5);}
-.integ-hub img{height:26px; filter:brightness(0) invert(1);}
-.integ-node{position:absolute; width:80px; height:80px; border-radius:20px; background:#fff; border:1px solid #EEE8FA; display:flex; align-items:center; justify-content:center; font-family:'Sora'; font-weight:700; font-size:12px; color:var(--ink); box-shadow:0 14px 34px -12px rgba(20,10,50,.15); text-align:center; line-height:1.2;}
-.integ-svg{position:absolute; inset:0; width:100%; height:100%; z-index:1;}
-.integ-svg line{stroke:#D9CFF0; stroke-width:1.5; stroke-dasharray:5 5; animation:dashmove 3s linear infinite;}
+/* ===== Integration Image ===== */
+
+.integ-wrap{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width:100%;
+    padding:20px;
+}
+
+.integration-image{
+    width:100%;
+    max-width:900px;
+    height:auto;
+    display:block;
+    border-radius:24px;
+    transition:all .35s ease;
+    filter:drop-shadow(0 30px 60px rgba(108,59,255,.25));
+}
+
+.integration-image:hover{
+    transform:translateY(-8px) scale(1.02);
+}
 @keyframes dashmove{to{stroke-dashoffset:-20;}}
 
 /* ===== MIGRATION TIMELINE ===== */
@@ -840,15 +857,11 @@ a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible
       <p style="margin:16px auto 0;">Sysgrate connects Zoom Contact Center to your CRM, ticketing and ERP — with zero manual data entry.</p>
     </div>
     <div class="integ-wrap reveal">
-      <svg class="integ-svg" id="integSvg"></svg>
-      <div class="integ-hub"><img src="data:image/png;base64,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" alt="Sysgrate"></div>
-      <div class="integ-node" style="top:0; left:50%; transform:translate(-50%,0);">Salesforce</div>
-      <div class="integ-node" style="top:12%; right:6%;">HubSpot</div>
-      <div class="integ-node" style="bottom:12%; right:6%;">Zendesk</div>
-      <div class="integ-node" style="bottom:0; left:50%; transform:translate(-50%,0);">Microsoft</div>
-      <div class="integ-node" style="bottom:12%; left:6%;">ServiceNow</div>
-      <div class="integ-node" style="top:12%; left:6%;">SAP</div>
-    </div>
+    <img
+        src="images/integrations.png"
+        alt="Zoom Contact Center Integrations"
+        class="integration-image">
+</div>
   </div>
 </section>
 
