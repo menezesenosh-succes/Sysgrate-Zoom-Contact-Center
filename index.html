@@ -1162,7 +1162,7 @@ form.addEventListener('submit', function(e){
 </script>
 <script>
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbyhnoHQTsh5lAt8ONPkqjuYc8sRa0wqYtfwI0Ts7JBxxKE45J-egduXzHsIAU6AM3cXDA/exec";
+const scriptURL = "https://script.google.com/macros/s/AKfycbyyUMxAybiUk8qNsVzsGIXdHwT9koQ9ttdE9op_bR3hor67raLTu4ZnGYTRjNKQuxqPkg/exec";
 
 const form = document.getElementById("ccForm");
 
@@ -1170,17 +1170,21 @@ form.addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-  const formData = {
+    const submitBtn = form.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerText = "Submitting...";
 
-    fname: document.getElementById("fname").value,
-    email: document.getElementById("email").value,
-    company: document.getElementById("company").value,
-    phone: document.getElementById("phone").value,
-    agents: document.getElementById("agents").value,
-    platform: document.getElementById("platform").value,
-    timeline: document.getElementById("timeline").value
+    const formData = {
 
-};
+        fname: document.getElementById("fname").value,
+        email: document.getElementById("email").value,
+        company: document.getElementById("company").value,
+        phone: document.getElementById("phone").value,
+        agents: document.getElementById("agents").value,
+        platform: document.getElementById("platform").value,
+        timeline: document.getElementById("timeline").value
+
+    };
 
     try{
 
@@ -1191,23 +1195,32 @@ form.addEventListener("submit", async function(e){
 
         const result = await response.json();
 
-        if(result.status==="success"){
+        if(result.status=="success"){
 
-            window.location.href="thank-you.html";
+            form.reset();
+
+            document.querySelector(".form-success").classList.add("show");
+
+            form.style.display="none";
 
         }else{
 
-            alert("Submission Failed");
+            alert(result.message);
 
         }
 
-    }catch(error){
+    }
 
-        console.error(error);
+    catch(err){
 
-        alert("Unable to submit form.");
+        alert("Submission Failed");
+
+        console.log(err);
 
     }
+
+    submitBtn.disabled=false;
+    submitBtn.innerText="Book My Free Demo";
 
 });
 
