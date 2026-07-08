@@ -1160,44 +1160,46 @@ form.addEventListener('submit', function(e){
   window.addEventListener('resize', draw);
   setTimeout(draw, 300);
 })();
-</script>
+<script>
+
 const scriptURL = "https://script.google.com/macros/s/AKfycbxhMAU3pusGcVmrEthYsulqZdkrxKOh6mAyVVD9NOO7h_WtZDw55-qnlP_XlYlQcCgw/exec";
 
-document
-.getElementById("leadForm")
+document.getElementById("ccForm")
 .addEventListener("submit", function(e){
 
     e.preventDefault();
 
     const data = {
-
-      fullname: document.getElementById("fullname").value,
-      email: document.getElementById("email").value,
-      company: document.getElementById("company").value,
-      phone: document.getElementById("phone").value,
-      agents: document.getElementById("agents").value,
-      platform: document.getElementById("platform").value,
-      timeline: document.getElementById("timeline").value
-
+        fullname: document.getElementById("fullname").value,
+        email: document.getElementById("email").value,
+        company: document.getElementById("company").value,
+        phone: document.getElementById("phone").value,
+        agents: document.getElementById("agents").value,
+        platform: document.getElementById("platform").value,
+        timeline: document.getElementById("timeline").value
     };
 
     fetch(scriptURL,{
         method:"POST",
-        body:JSON.stringify(data)
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify(data)
     })
     .then(res=>res.text())
     .then(response=>{
-
-        alert("Thank you! Our CX Specialist will contact you shortly.");
-
-        document.getElementById("leadForm").reset();
-
+        console.log(response);
+        alert("Lead submitted successfully!");
+        document.getElementById("ccForm").reset();
     })
-    .catch(error=>{
-        alert("Something went wrong.");
-        console.log(error);
+    .catch(err=>{
+        console.error(err);
+        alert("Submission failed.");
     });
 
 });
+
+</script>
+
 </body>
 </html>
