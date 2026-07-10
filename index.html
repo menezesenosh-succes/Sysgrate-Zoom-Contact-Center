@@ -1196,44 +1196,31 @@ document.getElementById("ccForm").addEventListener("submit", async function(e){
 
     console.log("Sending Data:", payload);
 
-    try{
+    try {
 
-        const response = await fetch(SCRIPT_URL,{
+    await fetch(SCRIPT_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    });
 
-            method:"POST",
+    console.log("Form submitted successfully.");
 
-            headers:{
-                "Content-Type":"application/json"
-            },
+    document.getElementById("ccForm").reset();
 
-            body:JSON.stringify(payload)
+    alert("Thank you! Our CX Specialist will contact you shortly.");
 
-        });
+}
+catch(error){
 
-        const result = await response.json();
+    console.error(error);
 
-        console.log(result);
+    alert("Unable to submit the form.");
 
-        if(result.status==="success"){
-
-            document.getElementById("ccForm").reset();
-
-            alert("Thank you! Our CX Specialist will contact you shortly.");
-
-        }else{
-
-            alert("Submission Failed\n\n"+result.message);
-
-        }
-
-    }
-    catch(error){
-
-        console.error(error);
-
-        alert("Unable to connect to Google Apps Script.");
-
-    }
+}
 
     submitBtn.disabled=false;
     submitBtn.innerHTML="Book My Free Demo";
