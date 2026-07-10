@@ -1161,41 +1161,82 @@ form.addEventListener('submit', function(e){
   setTimeout(draw, 300);
 })();
 </script>
+<script>
 
-const scriptURL = "https://script.google.com/macros/s/AKfycbxhMAU3pusGcVmrEthYsulqZdkrxKOh6mAyVVD9NOO7h_WtZDw55-qnlP_XlYlQcCgw/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhMAU3pusGcVmrEthYsulqZdkrxKOh6mAyVVD9NOO7h_WtZDw55-qnlP_XlYlQcCgw/exec";
 
-document.getElementById("ccForm")
-.addEventListener("submit", function(e){
+// Form Submit
+document.getElementById("ccForm").addEventListener("submit", async function(e){
 
     e.preventDefault();
 
-    const data = {
-        fullname: document.getElementById("fullname").value,
-        email: document.getElementById("email").value,
-        company: document.getElementById("company").value,
-        phone: document.getElementById("phone").value,
+    // Disable button while submitting
+    const submitBtn = this.querySelector("button[type='submit']");
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = "Submitting...";
+
+    // Collect Form Data
+    const payload = {
+
+        fullname: document.getElementById("fullname").value.trim(),
+
+        email: document.getElementById("email").value.trim(),
+
+        company: document.getElementById("company").value.trim(),
+
+        phone: document.getElementById("phone").value.trim(),
+
         agents: document.getElementById("agents").value,
-        platform: document.getElementById("platform").value,
+
+        platform: document.getElementById("platform").value.trim(),
+
         timeline: document.getElementById("timeline").value
+
     };
 
-    fetch(scriptURL,{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
-        body: JSON.stringify(data)
-    })
-    .then(res=>res.text())
-    .then(response=>{
-        console.log(response);
-        alert("Lead submitted successfully!");
-        document.getElementById("ccForm").reset();
-    })
-    .catch(err=>{
-        console.error(err);
-        alert("Submission failed.");
-    });
+    console.log("Sending Data:", payload);
+
+    try{
+
+        const response = await fetch(SCRIPT_URL,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(payload)
+
+        });
+
+        const result = await response.json();
+
+        console.log(result);
+
+        if(result.status==="success"){
+
+            document.getElementById("ccForm").reset();
+
+            alert("Thank you! Our CX Specialist will contact you shortly.");
+
+        }else{
+
+            alert("Submission Failed\n\n"+result.message);
+
+        }
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert("Unable to connect to Google Apps Script.");
+
+    }
+
+    submitBtn.disabled=false;
+    submitBtn.innerHTML="Book My Free Demo";
 
 });
 
