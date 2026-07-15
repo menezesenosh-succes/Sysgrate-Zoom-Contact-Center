@@ -596,11 +596,20 @@ style="display:none;visibility:hidden">
       <h3>Book Your Free Zoom Contact Center Consultation</h3>
       <p>Speak with our certified Zoom experts and discover how your organization can improve customer experience using AI-powered Contact Center technology.</p>
 
-      <form id="ccForm" novalidate>
+      <form id="ccForm">
         <div class="form-grid">
           <div class="field full">
             <label for="fullname">Full Name *</label>
-            <input id="fullname" name="fullname" type="text" placeholder="Jordan Patel" required>
+           <input
+    id="fullname"
+    name="fullname"
+    type="text"
+    placeholder="Jordan Patel"
+    required
+    minlength="3"
+    maxlength="50"
+    pattern="[A-Za-z ]{3,50}"
+    title="Please enter your full name using only letters (minimum 3 characters)">
             <div class="err">Please enter your full name.</div>
           </div>
           <div class="field full">
@@ -610,27 +619,46 @@ style="display:none;visibility:hidden">
           </div>
           <div class="field">
             <label for="company">Company Name *</label>
-            <input id="company" name="company" type="text" placeholder="Acme Corp" required>
+           <input
+    id="company"
+    name="company"
+    type="text"
+    placeholder="Acme Corp"
+    required
+    minlength="2"
+    maxlength="100">
             <div class="err">Required field.</div>
           </div>
             <div class="field">
             <label for="phone">Phone Number *</label>
-            <input id="phone" name="phone" type="tel" placeholder="+91 98765 43210" required>
+           <input
+id="phone"
+name="phone"
+type="tel"
+placeholder="+91 98765 43210"
+required
+pattern="[0-9]{10,15}"
+maxlength="15"
+title="Please enter a valid phone number (10–15 digits)">
             <div class="err">Please enter a valid phone number.</div>
           </div>
             <div class="field">
             <label for="agents">Number of Agents</label>
-            <select id="agents" name="agents">
-              <option value="">Select</option>
+            <select id="agents" name="agents" required>
+             <option value="">Select Number of Agents</option>
               <option>1–20</option><option>21–50</option><option>51–150</option><option>151–500</option><option>500+</option>
             </select>
           </div>
           <div class="field">
             <label for="platform">Current Platform</label>
-            <input id="platform" name="platform" type="text" placeholder="e.g. Avaya, Genesys">
+            <input
+id="platform"
+required
+minlength="2"
+maxlength="50" type="text" placeholder="e.g. Avaya, Genesys">
           </div>
             <div class="field">
-            <label for="timeline">Expected Timeline</label>
+            <select id="timeline" required>Expected Timeline</label>
             <select id="timeline" name="timeline">
               <option>Immediately</option>
               <option>Within 30 Days</option>
@@ -1040,6 +1068,15 @@ const form = document.getElementById('ccForm');
 const success = document.getElementById('formSuccess');
 form.addEventListener('submit', function(e){
   e.preventDefault();
+  if (!this.checkValidity()) {
+
+    alert("Please complete all the required fields.");
+
+    this.reportValidity();
+
+    return;
+
+}
   let valid = true;
   const required = form.querySelectorAll('[required]');
   required.forEach(f => {
@@ -1195,6 +1232,12 @@ form.addEventListener('submit', function(e){
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxhMAU3pusGcVmrEthYsulqZdkrxKOh6mAyVVD9NOO7h_WtZDw55-qnlP_XlYlQcCgw/exec";
 
+  // Allow only letters in Full Name
+document.getElementById("fullname").addEventListener("input", function () {
+
+    this.value = this.value.replace(/[^A-Za-z ]/g, "");
+
+});
 // Form Submit
 document.getElementById("ccForm").addEventListener("submit", async function(e){
 
