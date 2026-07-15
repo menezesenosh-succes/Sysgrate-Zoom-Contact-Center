@@ -652,21 +652,23 @@ title="Please enter a valid phone number (10–15 digits)">
           <div class="field">
             <label for="platform">Current Platform</label>
             <input
-id="platform"
+id="platform"  
 required
 minlength="2"
 maxlength="50" type="text" placeholder="e.g. Avaya, Genesys">
           </div>
             <div class="field">
-            <select id="timeline" required>Expected Timeline</label>
-            <select id="timeline" name="timeline">
-              <option>Immediately</option>
-              <option>Within 30 Days</option>
-              <option>Within 90 Days</option>
-              <option>Exploring</option>
-            </select>
-          </div>
-          </div>
+    <label for="timeline">Expected Timeline</label>
+
+    <select id="timeline" name="timeline" required>
+        <option value="">Select Timeline</option>
+        <option value="Immediately">Immediately</option>
+        <option value="Within 30 Days">Within 30 Days</option>
+        <option value="Within 90 Days">Within 90 Days</option>
+        <option value="Exploring">Exploring</option>
+    </select>
+
+</div>          </div>
         <label class="checkline"><input type="checkbox" id="consent" required> I agree to receive communication from Sysgrate regarding this inquiry.</label>
         <button type="submit" class="btn btn-primary form-submit">Book My Free Demo</button>
       </form>
