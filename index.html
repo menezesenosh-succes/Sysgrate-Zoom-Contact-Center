@@ -1086,33 +1086,7 @@ form.addEventListener('submit', function(e){
     let ok = true;
     if (f.type === 'checkbox') ok = f.checked;
     else ok = f.value.trim().length > 1;
-    if (f.type === 'email') {
-
-    ok = ok && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value);
-
-    const blocked = [
-        "gmail.com",
-        "yahoo.com",
-        "hotmail.com",
-        "outlook.com",
-        "live.com",
-        "icloud.com",
-        "aol.com",
-        "protonmail.com",
-        "proton.me",
-        "mail.com",
-        "gmx.com",
-        "zoho.com",
-        "rediffmail.com",
-        "yandex.com"
-    ];
-
-    if (ok) {
-        const domain = f.value.toLowerCase().split("@")[1];
-        ok = !blocked.includes(domain);
-    }
-
-}
+    if (f.type === 'email') ok = ok && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value);
     if (field && field.classList.contains('field')) field.classList.toggle('invalid', !ok);
     if (!ok) valid = false;
   });
@@ -1278,44 +1252,6 @@ document.getElementById("ccForm").addEventListener("submit", async function(e){
 
     // Collect Form Data
     const payload = {
-
-      // Block personal email addresses
-
-const personalDomains = [
-    "gmail.com",
-    "yahoo.com",
-    "hotmail.com",
-    "outlook.com",
-    "live.com",
-    "msn.com",
-    "icloud.com",
-    "me.com",
-    "mac.com",
-    "aol.com",
-    "protonmail.com",
-    "proton.me",
-    "mail.com",
-    "gmx.com",
-    "zoho.com",
-    "rediffmail.com",
-    "yandex.com"
-];
-
-const email = payload.email.toLowerCase();
-
-const domain = email.split("@")[1];
-
-if (personalDomains.includes(domain)) {
-
-    alert("Please enter your official company email address. Personal email addresses such as Gmail, Yahoo, Outlook, etc. are not accepted.");
-
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = "Book My Free Consultation";
-
-    document.getElementById("email").focus();
-
-    return;
-}
 
         fullname: document.getElementById("fullname").value.trim(),
 
