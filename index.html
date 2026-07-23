@@ -1070,51 +1070,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
 // ---- form validation + fake submit ----
 const form = document.getElementById('ccForm');
 const success = document.getElementById('formSuccess');
-form.addEventListener('submit', function(e){
-  e.preventDefault();
- function isBusinessEmail(email) {
-
-    email = email.trim().toLowerCase();
-
-    const blockedDomains = [
-        "gmail.com",
-        "googlemail.com",
-        "yahoo.com",
-        "yahoo.co.in",
-        "hotmail.com",
-        "outlook.com",
-        "live.com",
-        "icloud.com",
-        "aol.com",
-        "msn.com",
-        "mail.com",
-        "gmx.com",
-        "zoho.com",
-        "proton.me",
-        "protonmail.com",
-        "rediffmail.com",
-        "yandex.com"
-    ];
-
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    const domain = email.split("@")[1];
-
-    return (
-        emailRegex.test(email) &&
-        domain &&
-        !blockedDomains.includes(domain)
-    );
-}
-  if (!this.checkValidity()) {
-
-    alert("Please complete all the required fields.");
-
-    this.reportValidity();
-
-    return;
-
-}
   let valid = true;
   const required = form.querySelectorAll('[required]');
   required.forEach(f => {
@@ -1372,22 +1327,6 @@ document.getElementById("ccForm").addEventListener("submit", async function(e){
         fullname: document.getElementById("fullname").value.trim(),
 
         email: email.trim(),
-
-        company: document.getElementById("company").value.trim(),
-
-        phone: document.getElementById("phone").value.trim(),
-
-        agents: document.getElementById("agents").value,
-
-        platform: document.getElementById("platform").value.trim(),
-
-        timeline: document.getElementById("timeline").value
-
-    };
-
-        fullname: document.getElementById("fullname").value.trim(),
-
-        email: document.getElementById("email").value.trim(),
 
         company: document.getElementById("company").value.trim(),
 
