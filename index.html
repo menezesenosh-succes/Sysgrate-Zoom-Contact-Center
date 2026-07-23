@@ -1072,6 +1072,48 @@ const form = document.getElementById('ccForm');
 const success = document.getElementById('formSuccess');
 form.addEventListener('submit', function(e){
   e.preventDefault();
+  // Validate Business Email
+const email = document.getElementById("email").value.trim().toLowerCase();
+
+const blockedDomains = [
+    "gmail.com",
+    "googlemail.com",
+    "yahoo.com",
+    "yahoo.co.in",
+    "outlook.com",
+    "hotmail.com",
+    "live.com",
+    "msn.com",
+    "icloud.com",
+    "me.com",
+    "mac.com",
+    "aol.com",
+    "proton.me",
+    "protonmail.com",
+    "zoho.com",
+    "gmx.com",
+    "mail.com",
+    "yandex.com",
+    "rediffmail.com"
+];
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const domain = email.split("@")[1];
+
+if (
+    !emailRegex.test(email) ||
+    !domain ||
+    blockedDomains.includes(domain)
+) {
+    alert("Please enter your official company email address.");
+
+    document.getElementById("email").focus();
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = "Book My Free Demo";
+
+    return;
+}
   if (!this.checkValidity()) {
 
     alert("Please complete all the required fields.");
