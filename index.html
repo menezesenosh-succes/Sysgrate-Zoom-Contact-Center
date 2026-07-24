@@ -1322,25 +1322,44 @@ const personalDomains = [
     "rediffmail.com",
     "yandex.com"
 ];
+const email = payload.email.trim().toLowerCase();
 
-const email = payload.email.toLowerCase();
-// Validate that the email ends with a valid domain
 const validEmailPattern =
 /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in|org|net|edu|gov|co|io|ai|biz|info|co\.in)$/i;
 
 if (!validEmailPattern.test(email)) {
-    alert("Please enter a valid business email address.");
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
 
     submitBtn.disabled = false;
-    submitBtn.innerHTML = "Book My Free Consultation";
+    submitBtn.innerHTML = "Book My Free Demo";
+
+    alert("Please enter a valid business email address.");
 
     document.getElementById("email").focus();
-    return;
+
+    return false;
 }
 
 const domain = email.split("@")[1];
 
+const domain = email.split("@")[1];
+
 if (personalDomains.includes(domain)) {
+
+    e.preventDefault();
+    e.stopImmediatePropagation();
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = "Book My Free Demo";
+
+    alert("Please enter your official company email address. Personal email addresses are not allowed.");
+
+    document.getElementById("email").focus();
+
+    return false;
+}
 
     alert("Please enter your official company email address. Personal email addresses such as Gmail, Yahoo, Outlook, etc. are not accepted.");
 
