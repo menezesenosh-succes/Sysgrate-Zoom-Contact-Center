@@ -614,7 +614,13 @@ style="display:none;visibility:hidden">
           </div>
           <div class="field full">
             <label for="email">Business Email *</label>
-            <input id="email" name="email" type="email" placeholder="jordan@company.com" required>
+            <input
+    id="email"
+    name="email"
+    type="email"
+    pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in|org|net|edu|gov|co|io|ai|biz|info|me|us|uk|ca|au|sg|ae)$"
+    title="Please enter a valid official company email address."
+    required>
             <div class="err">Please enter a valid business email.</div>
           </div>
           <div class="field">
@@ -1316,9 +1322,25 @@ const personalDomains = [
     "yandex.com"
 ];
 
-const email = payload.email.toLowerCase();
+const email = payload.email.trim().toLowerCase();
 
-const domain = email.split("@")[1];
+// Validate email format and ending
+const emailRegex =
+/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in|org|net|edu|gov|co|io|ai|biz|info|me|us|uk|ca|au|sg|ae)$/i;
+
+if (!emailRegex.test(email)) {
+
+    alert("Please enter a valid official company email address.");
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = "Book My Free Consultation";
+
+    document.getElementById("email").focus();
+
+    return;
+}
+
+const domain = email.substring(email.lastIndexOf("@") + 1);
 
 if (personalDomains.includes(domain)) {
 
@@ -1331,7 +1353,6 @@ if (personalDomains.includes(domain)) {
 
     return;
 }
-
     console.log("Sending Data:", payload);
 
     try {
