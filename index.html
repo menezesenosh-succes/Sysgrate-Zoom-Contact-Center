@@ -3,6 +3,33 @@
 <head>
   <!-- Google Tag Manager -->
 <script>
+function isValidCompanyEmail(email) {
+  email = email.trim().toLowerCase();
+
+  // Basic shape check: something@something.tld
+  const basicPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  if (!basicPattern.test(email)) return false;
+
+  const domain = email.split('@')[1];
+  const parts = domain.split('.');
+  const lastPart  = parts.slice(-1).join('.');   // e.g. "com"
+  const last2Part = parts.slice(-2).join('.');   // e.g. "co.in"
+
+  // Whitelist of allowed endings — add more here if needed (e.g. 'org','net')
+  const allowedTlds = ['com', 'in', 'co.in', 'io'];
+  const tldOk = allowedTlds.includes(lastPart) || allowedTlds.includes(last2Part);
+  if (!tldOk) return false;
+
+  const personalDomains = [
+    "gmail.com","yahoo.com","hotmail.com","outlook.com","live.com","msn.com",
+    "icloud.com","me.com","mac.com","aol.com","protonmail.com","proton.me",
+    "mail.com","gmx.com","zoho.com","rediffmail.com","yandex.com"
+  ];
+  if (personalDomains.includes(domain)) return false;
+
+  return true;
+}
+</script>
 (function(w,d,s,l,i){
 w[l]=w[l]||[];
 w[l].push({
@@ -614,16 +641,7 @@ style="display:none;visibility:hidden">
           </div>
           <div class="field full">
             <label for="email">Business Email *</label>
-            <input
-    <input
-    id="email"
-    name="email"
-    type="email"
-    required
-    placeholder="name@company.com"
-    pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(com|in|org|net|edu|gov|io|ai|biz|info|co\.in)$"
-    title="Please enter a valid company email address."
->
+            <input id="email" name="email" type="email" placeholder="jordan@company.com" required>
             <div class="err">Please enter a valid business email.</div>
           </div>
           <div class="field">
@@ -1079,65 +1097,15 @@ const form = document.getElementById('ccForm');
 const success = document.getElementById('formSuccess');
 form.addEventListener('submit', function(e){
   e.preventDefault();
-  if (!this.checkValidity()) {
-
-    alert("Please complete all the required fields.");
-
-    this.reportValidity();
-
-    return;
-
+ if (f.type === 'email') {
+    ok = ok && isValidCompanyEmail(f.value);
 }
-  let valid = true;
-  const required = form.querySelectorAll('[required]');
-  required.forEach(f => {
-    const field = f.closest('.field') || f.closest('.checkline');
-    let ok = true;
-    if (f.type === 'checkbox') ok = f.checked;
-    else ok = f.value.trim().length > 1;
-  if (f.type === 'email') {
-
-    const email = f.value.trim().toLowerCase();
-
-    const companyEmailRegex =
-    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(com|in|org|net|edu|gov|io|ai|biz|info|co\.in)$/i;
-
-    ok = companyEmailRegex.test(email);
-
-    const blocked = [
-        "gmail.com",
-        "yahoo.com",
-        "hotmail.com",
-        "outlook.com",
-        "live.com",
-        "icloud.com",
-        "aol.com",
-        "protonmail.com",
-        "proton.me",
-        "mail.com",
-        "gmx.com",
-        "zoho.com",
-        "rediffmail.com",
-        "yandex.com"
-    ];
-
-    if (ok) {
-        const domain = email.split("@")[1];
-        ok = !blocked.includes(domain);
-    }
-
-}
-    
     if (field && field.classList.contains('field')) field.classList.toggle('invalid', !ok);
     if (!ok) valid = false;
   });
-  if (!valid) {
-    e.preventDefault();
-    return false;
-}
-
-// DO NOT SHOW SUCCESS HERE
-// Leave everything below removed.
+  if (!valid) return;
+  form.style.display = 'none';
+  success.classList.add('show');
 });
 
 // ---- hero canvas particles + connecting lines ----
@@ -1315,59 +1283,16 @@ document.getElementById("ccForm").addEventListener("submit", async function(e){
     };
   // Block personal email addresses
 
-const personalDomains = [
-    "gmail.com",
-    "yahoo.com",
-    "hotmail.com",
-    "outlook.com",
-    "live.com",
-    "msn.com",
-    "icloud.com",
-    "me.com",
-    "mac.com",
-    "aol.com",
-    "protonmail.com",
-    "proton.me",
-    "mail.com",
-    "gmx.com",
-    "zoho.com",
-    "rediffmail.com",
-    "yandex.com"
-];
-const email = payload.email.trim().toLowerCase();
+if (!isValidCompanyEmail(payload.email)) {
 
-const validEmailPattern =
-/^[A-Za-z0-9._%+-]+@(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,}$/;
-if (!validEmailPattern.test(email)) {
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
+    alert("Please use a valid company email address");
 
     submitBtn.disabled = false;
     submitBtn.innerHTML = "Book My Free Demo";
 
-    alert("Please enter a valid business email address.");
-
     document.getElementById("email").focus();
 
-    return false;
-}
-
-const domain = email.split("@")[1];
-
-if (personalDomains.includes(domain)) {
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-
-    submitBtn.disabled = false;
-    submitBtn.innerHTML = "Book My Free Demo";
-
-    alert("Please enter your official company email address. Personal email addresses are not allowed.");
-
-    document.getElementById("email").focus();
-
-    return false;
+    return;
 }
 
     console.log("Sending Data:", payload);
