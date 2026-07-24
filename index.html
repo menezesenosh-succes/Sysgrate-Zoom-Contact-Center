@@ -615,13 +615,15 @@ style="display:none;visibility:hidden">
           <div class="field full">
             <label for="email">Business Email *</label>
             <input
+    <input
     id="email"
     name="email"
     type="email"
-    placeholder="jordan@company.com"
-    pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in|org|net|edu|gov|co|io|ai|biz|info|co\.in)$"
-    title="Please enter a valid business email address."
-    required>
+    required
+    placeholder="name@company.com"
+    pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(com|in|org|net|edu|gov|io|ai|biz|info|co\.in)$"
+    title="Please enter a valid company email address."
+>
             <div class="err">Please enter a valid business email.</div>
           </div>
           <div class="field">
@@ -1093,9 +1095,14 @@ form.addEventListener('submit', function(e){
     let ok = true;
     if (f.type === 'checkbox') ok = f.checked;
     else ok = f.value.trim().length > 1;
-   if (f.type === 'email') {
+  if (f.type === 'email') {
 
-    ok = ok && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.value);
+    const email = f.value.trim().toLowerCase();
+
+    const companyEmailRegex =
+    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(com|in|org|net|edu|gov|io|ai|biz|info|co\.in)$/i;
+
+    ok = companyEmailRegex.test(email);
 
     const blocked = [
         "gmail.com",
@@ -1115,11 +1122,12 @@ form.addEventListener('submit', function(e){
     ];
 
     if (ok) {
-        const domain = f.value.toLowerCase().split("@")[1];
+        const domain = email.split("@")[1];
         ok = !blocked.includes(domain);
     }
 
 }
+    
     if (field && field.classList.contains('field')) field.classList.toggle('invalid', !ok);
     if (!ok) valid = false;
   });
