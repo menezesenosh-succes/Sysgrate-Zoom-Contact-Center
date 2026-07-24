@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Tag Manager -->
-<script>
+  <script>
 function isValidCompanyEmail(email) {
   email = email.trim().toLowerCase();
-
-  // Basic shape check: something@something.tld
   const basicPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
   if (!basicPattern.test(email)) return false;
 
   const domain = email.split('@')[1];
   const parts = domain.split('.');
-  const lastPart  = parts.slice(-1).join('.');   // e.g. "com"
-  const last2Part = parts.slice(-2).join('.');   // e.g. "co.in"
+  const lastPart  = parts.slice(-1).join('.');
+  const last2Part = parts.slice(-2).join('.');
 
-  // Whitelist of allowed endings — add more here if needed (e.g. 'org','net')
   const allowedTlds = ['com', 'in', 'co.in', 'io'];
   const tldOk = allowedTlds.includes(lastPart) || allowedTlds.includes(last2Part);
   if (!tldOk) return false;
@@ -29,7 +25,9 @@ function isValidCompanyEmail(email) {
 
   return true;
 }
-</script>
+ </script>
+  <!-- Google Tag Manager -->
+<script>
 (function(w,d,s,l,i){
 w[l]=w[l]||[];
 w[l].push({
@@ -1097,9 +1095,21 @@ const form = document.getElementById('ccForm');
 const success = document.getElementById('formSuccess');
 form.addEventListener('submit', function(e){
   e.preventDefault();
- if (f.type === 'email') {
-    ok = ok && isValidCompanyEmail(f.value);
-}
+  if (!this.checkValidity()) {
+    alert("Please complete all the required fields.");
+    this.reportValidity();
+    return;
+  }
+  let valid = true;
+  const required = form.querySelectorAll('[required]');
+  required.forEach(f => {
+    const field = f.closest('.field') || f.closest('.checkline');
+    let ok = true;
+    if (f.type === 'checkbox') ok = f.checked;
+    else ok = f.value.trim().length > 1;
+    if (f.type === 'email') {
+      ok = ok && isValidCompanyEmail(f.value);
+    }
     if (field && field.classList.contains('field')) field.classList.toggle('invalid', !ok);
     if (!ok) valid = false;
   });
