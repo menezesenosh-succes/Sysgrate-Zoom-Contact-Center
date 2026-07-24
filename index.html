@@ -1077,69 +1077,6 @@ document.querySelectorAll('.faq-item').forEach(item => {
 // ---- form validation + fake submit ----
 const form = document.getElementById('ccForm');
 const success = document.getElementById('formSuccess');
-form.addEventListener('submit', function(e){
-  e.preventDefault();
-  if (!this.checkValidity()) {
-
-    alert("Please complete all the required fields.");
-
-    this.reportValidity();
-
-    return;
-
-}
-  let valid = true;
-  const required = form.querySelectorAll('[required]');
-  required.forEach(f => {
-    const field = f.closest('.field') || f.closest('.checkline');
-    let ok = true;
-    if (f.type === 'checkbox') ok = f.checked;
-    else ok = f.value.trim().length > 1;
-  if (f.type === 'email') {
-
-    const email = f.value.trim().toLowerCase();
-
-    const companyEmailRegex =
-    /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(com|in|org|net|edu|gov|io|ai|biz|info|co\.in)$/i;
-
-    ok = companyEmailRegex.test(email);
-
-    const blocked = [
-        "gmail.com",
-        "yahoo.com",
-        "hotmail.com",
-        "outlook.com",
-        "live.com",
-        "icloud.com",
-        "aol.com",
-        "protonmail.com",
-        "proton.me",
-        "mail.com",
-        "gmx.com",
-        "zoho.com",
-        "rediffmail.com",
-        "yandex.com"
-    ];
-
-    if (ok) {
-        const domain = email.split("@")[1];
-        ok = !blocked.includes(domain);
-    }
-
-}
-    
-    if (field && field.classList.contains('field')) field.classList.toggle('invalid', !ok);
-    if (!ok) valid = false;
-  });
-  if (!valid) {
-    e.preventDefault();
-    return false;
-}
-
-// DO NOT SHOW SUCCESS HERE
-// Leave everything below removed.
-});
-
 // ---- hero canvas particles + connecting lines ----
 (function(){
   const canvas = document.getElementById('hero-canvas');
@@ -1289,6 +1226,35 @@ document.getElementById("fullname").addEventListener("input", function () {
 document.getElementById("ccForm").addEventListener("submit", async function(e){
 
     e.preventDefault();
+  const email = document.getElementById("email").value.trim().toLowerCase();
+
+const companyEmailRegex =
+/^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)*\.(com|in|org|net|edu|gov|io|ai|biz|info|co\.in)$/i;
+
+const blocked = [
+"gmail.com",
+"yahoo.com",
+"hotmail.com",
+"outlook.com",
+"live.com",
+"icloud.com",
+"aol.com",
+"protonmail.com",
+"proton.me",
+"mail.com",
+"gmx.com",
+"zoho.com",
+"rediffmail.com",
+"yandex.com"
+];
+
+if (
+    !companyEmailRegex.test(email) ||
+    blocked.includes(email.split("@")[1])
+) {
+    alert("Please enter a valid company email.");
+    return;
+}
 
     // Disable button while submitting
     const submitBtn = this.querySelector("button[type='submit']");
