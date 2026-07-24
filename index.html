@@ -614,7 +614,14 @@ style="display:none;visibility:hidden">
           </div>
           <div class="field full">
             <label for="email">Business Email *</label>
-            <input id="email" name="email" type="email" placeholder="jordan@company.com" required>
+            <input
+    id="email"
+    name="email"
+    type="email"
+    placeholder="jordan@company.com"
+    pattern="^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in|org|net|edu|gov|co|io|ai|biz|info|co\.in)$"
+    title="Please enter a valid business email address."
+    required>
             <div class="err">Please enter a valid business email.</div>
           </div>
           <div class="field">
@@ -1317,6 +1324,19 @@ const personalDomains = [
 ];
 
 const email = payload.email.toLowerCase();
+// Validate that the email ends with a valid domain
+const validEmailPattern =
+/^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.(com|in|org|net|edu|gov|co|io|ai|biz|info|co\.in)$/i;
+
+if (!validEmailPattern.test(email)) {
+    alert("Please enter a valid business email address.");
+
+    submitBtn.disabled = false;
+    submitBtn.innerHTML = "Book My Free Consultation";
+
+    document.getElementById("email").focus();
+    return;
+}
 
 const domain = email.split("@")[1];
 
