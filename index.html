@@ -1337,7 +1337,9 @@ if (!emailRegex.test(email)) {
 
     document.getElementById("email").focus();
 
-    return;
+    e.preventDefault();
+e.stopImmediatePropagation();
+return false;
 }
 
 const domain = email.substring(email.lastIndexOf("@") + 1);
